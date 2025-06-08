@@ -41,9 +41,9 @@ export default function Profile() {
   const onSubmit = async (data: ProfileFormData) => {
     try {
       if (profile) {
-        await updateProfile.mutateAsync(data.displayName);
+        await updateProfile.mutateAsync({ display_name: data.displayName });
       } else {
-        await createProfile.mutateAsync(data.displayName);
+        await createProfile.mutateAsync({ display_name: data.displayName });
       }
       setIsEditing(false);
     } catch (err) {

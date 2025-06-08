@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getStoredToken, setStoredToken, clearStoredToken, isAuthenticated } from '~/lib/auth';
 import { login, register, type User } from '~/lib/auth-api';
-import { apiClient } from '~/lib/api-client';
+import { apiClient, createProfile } from '~/lib/api-client';
 
 interface AuthUser {
   userId: string;
@@ -16,18 +16,23 @@ export function useAuth() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Skip auth check during SSR
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+
     const checkAuth = async () => {
       if (isAuthenticated()) {
         try {
-          // Fetch user profile to verify token is still valid
-          const { data: profile } = await apiClient.get<any>('/profile');
+          const { data } = await apiClient.get<User>('/profile');
           setUser({ 
-            userId: profile.user_id,
-            displayName: profile.display_name, 
-            user: profile
+            userId: data.user_id,
+            displayName: data.display_name,
+            user: data
           });
         } catch (error) {
-          // Token is invalid, clear it
+          console.error('Failed to fetch user profile:', error);
           clearStoredToken();
           setUser(null);
         }
@@ -44,6 +49,16 @@ export function useAuth() {
     try {
       const authResponse = await register({ user_id: userId, password, display_name: displayName });
       setStoredToken(authResponse.token, 86400); // 24 hours
+      
+      // Create profile after successful registration
+      try {
+        await createProfile({
+          display_name: displayName,
+        });
+      } catch (profileError) {
+        console.error('Failed to create profile:', profileError);
+        // Continue even if profile creation fails - user can create it later
+      }
       
       setUser({ 
         userId: authResponse.user.user_id,

@@ -6,7 +6,7 @@ export function useProfile() {
   return useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
-      const { data } = await apiClient.get<Profile>('/profiles/me');
+      const { data } = await apiClient.get<Profile>('/profile');
       return data;
     },
   });
@@ -16,10 +16,8 @@ export function useCreateProfile() {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: async (displayName: string) => {
-      const { data } = await apiClient.post<Profile>('/profiles', {
-        display_name: displayName,
-      });
+    mutationFn: async (profileData: { display_name: string; bio?: string; avatar_url?: string }) => {
+      const { data } = await apiClient.post<Profile>('/profile', profileData);
       return data;
     },
     onSuccess: () => {
@@ -32,10 +30,8 @@ export function useUpdateProfile() {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: async (displayName: string) => {
-      const { data } = await apiClient.put('/profiles/me', {
-        display_name: displayName,
-      });
+    mutationFn: async (profileData: { display_name?: string; bio?: string; avatar_url?: string }) => {
+      const { data } = await apiClient.put('/profile', profileData);
       return data;
     },
     onSuccess: () => {

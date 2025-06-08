@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getStoredToken, clearStoredToken } from './auth';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -29,3 +29,25 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Profile API
+export interface CreateProfileData {
+  display_name: string;
+  bio?: string;
+  avatar_url?: string;
+}
+
+export interface Profile {
+  id: string;
+  user_id: string;
+  display_name: string;
+  bio?: string;
+  avatar_url?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function createProfile(data: CreateProfileData): Promise<Profile> {
+  const response = await apiClient.post<Profile>('/profile', data);
+  return response.data;
+}

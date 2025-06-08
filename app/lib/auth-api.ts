@@ -1,4 +1,6 @@
 
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
+
 export interface User {
   id: string;
   user_id: string;
@@ -25,7 +27,7 @@ export interface RegisterRequest {
 }
 
 export async function register(data: RegisterRequest): Promise<AuthResponse> {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/v1/auth/register`, {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -42,7 +44,7 @@ export async function register(data: RegisterRequest): Promise<AuthResponse> {
 }
 
 export async function login(data: LoginRequest): Promise<AuthResponse> {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/v1/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +61,7 @@ export async function login(data: LoginRequest): Promise<AuthResponse> {
 }
 
 export async function requestPasswordReset(userId: string): Promise<{ message: string; reset_token: string }> {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/v1/auth/request-password-reset`, {
+  const response = await fetch(`${API_BASE_URL}/auth/request-password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -76,7 +78,7 @@ export async function requestPasswordReset(userId: string): Promise<{ message: s
 }
 
 export async function resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/v1/auth/reset-password`, {
+  const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -93,7 +95,7 @@ export async function resetPassword(token: string, newPassword: string): Promise
 }
 
 export async function changePassword(currentPassword: string, newPassword: string): Promise<{ message: string }> {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/v1/auth/change-password`, {
+  const response = await fetch(`${API_BASE_URL}/auth/change-password`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
