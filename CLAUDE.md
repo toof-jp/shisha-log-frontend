@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a React Router v7 frontend application for Shisha Log with server-side rendering (SSR) enabled. The project uses:
+This is a React Router v7 frontend application for Shisha Log configured as a Single Page Application (SPA). The project uses:
 
 - **Vite** as the build tool
 - **TypeScript** for type safety with path alias `~/*` mapping to `./app/*`
@@ -53,6 +53,6 @@ Create `.env` file with:
 ## Important Notes
 
 - No testing framework or linting is currently configured
-- Docker support is available with multi-stage builds
-- Build output goes to `build/` directory
+- Docker support with nginx for serving static files
+- Build output goes to `build/client/` directory
 - Generated types are in `.react-router/` directory

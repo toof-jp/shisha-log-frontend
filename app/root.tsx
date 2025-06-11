@@ -24,14 +24,17 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      retry: 1,
-    },
-  },
-});
+// Create QueryClient instance only on client side for SPA
+const queryClient = typeof window !== 'undefined' 
+  ? new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 1000 * 60 * 5, // 5 minutes
+          retry: 1,
+        },
+      },
+    })
+  : ({} as QueryClient);
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
