@@ -19,16 +19,13 @@ class ApiService {
   private api: AxiosInstance;
 
   constructor() {
-    // 開発環境では localhost を、本番環境では api.shisha.toof.jp を使用
+    // 環境変数から API ベース URL を取得、フォールバックは開発/本番で分岐
     const isDev = import.meta.env.DEV;
     const defaultBaseURL = isDev 
       ? 'https://localhost:8080/api/v1' 
       : 'https://api.shisha.toof.jp/api/v1';
     
     const baseURL = import.meta.env.VITE_API_BASE_URL || defaultBaseURL;
-    console.log('Environment:', isDev ? 'development' : 'production');
-    console.log('API Base URL:', baseURL);
-    console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
     
     this.api = axios.create({
       baseURL,
