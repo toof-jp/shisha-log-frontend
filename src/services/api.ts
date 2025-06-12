@@ -30,7 +30,7 @@ class ApiService {
     this.api = axios.create({
       baseURL,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
       },
     });
 
