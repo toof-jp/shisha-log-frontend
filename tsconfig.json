@@ -24,8 +24,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* Node.js types for config files */
+    "types": ["node"]
   },
-  "include": ["src", "src/vite-env.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "src/vite-env.d.ts", "vite.config.ts", "postcss.config.js", "tailwind.config.js"]
 }
