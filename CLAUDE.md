@@ -6,13 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Start development server**: `npm run dev`
 - **Build for production**: `npm run build`
+- **Build for Cloudflare Pages**: `npm run build:cf`
 - **Run production server**: `npm run start`
 - **Type check**: `npm run typecheck`
 
 
 ## Architecture Overview
 
-This is a React Router v7 frontend application for Shisha Log with server-side rendering (SSR) enabled. The project uses:
+This is a React Router v7 frontend application for Shisha Log configured as a Single Page Application (SPA). The project uses:
 
 - **Vite** as the build tool
 - **TypeScript** for type safety with path alias `~/*` mapping to `./app/*`
@@ -49,6 +50,14 @@ This is a React Router v7 frontend application for Shisha Log with server-side r
 
 Create `.env` file with:
 - `VITE_API_BASE_URL` - Backend API URL (defaults to localhost:8080)
+
+## Deployment
+
+### Cloudflare Pages
+- Build command: `npm run build:cf`
+- Build output directory: `build/client`
+- Node.js version: 18+
+- Environment variables: Set `VITE_API_BASE_URL` to production API URL
 
 ## Important Notes
 
