@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "build:cf": "react-router build && cp -r public/* build/client/",
     "dev": "react-router dev --host",
     "start": "npx serve -s build/client -p 3000",
     "typecheck": "react-router typegen && tsc"
