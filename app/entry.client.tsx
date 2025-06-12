@@ -1,12 +1,13 @@
-import { startTransition, StrictMode } from 'react';
-import { hydrateRoot } from 'react-dom/client';
-import { HydratedRouter } from 'react-router/dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { RouterProvider, createBrowserRouter } from 'react-router/dom';
+import { routes } from './routes';
 
-startTransition(() => {
-  hydrateRoot(
-    document.getElementById('root')!,
-    <StrictMode>
-      <HydratedRouter />
-    </StrictMode>
-  );
-});
+const router = createBrowserRouter(routes);
+
+const root = createRoot(document.getElementById('root')!);
+root.render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
+);
